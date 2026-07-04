@@ -9,6 +9,7 @@ node_modules
 /dist
 /.vite
 *.local
+vite.config.ts.timestamp-*.mjs
 
 # Editor / OS
 .DS_Store
