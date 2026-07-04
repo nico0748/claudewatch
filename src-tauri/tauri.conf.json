@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "claudewatch",
+  "version": "0.1.0",
+  "identifier": "app.claudewatch",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:5173",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "windows": [
+      {
+        "title": "claudewatch",
+        "label": "popover",
+        "width": 380,
+        "height": 520,
+        "resizable": false,
+        "visible": false,
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true
+      }
+    ],
+    "trayIcon": {
+      "id": "main",
+      "iconPath": "icons/tray.png",
+      "iconAsTemplate": true,
+      "tooltip": "claudewatch"
+    },
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' https://claude.ai"
+    }
+  },
+  "plugins": {
+    "notification": {}
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg", "appimage"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "category": "Productivity",
+    "shortDescription": "Monitor usage & reset times across multiple Claude accounts.",
+    "macOS": {
+      "minimumSystemVersion": "11.0"
+    }
+  }
+}

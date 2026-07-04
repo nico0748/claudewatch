@@ -1,0 +1,61 @@
+[package]
+name = "claudewatch"
+version = "0.1.0"
+description = "Monitor usage limits and reset times across multiple Claude accounts."
+authors = ["claudewatch contributors"]
+license = "MIT"
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "claudewatch_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.0", features = ["tray-icon"] }
+tauri-plugin-notification = "2.0"
+
+# async runtime / http
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "cookies"] }
+
+# serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# time / tz
+chrono = { version = "0.4", features = ["serde"] }
+chrono-tz = "0.9"
+
+# storage / ids
+rusqlite = { version = "0.31", features = ["bundled"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+keyring = "2"
+
+# cookie decryption (chrome/brave)
+aes = "0.8"
+cbc = "0.1"
+pbkdf2 = "0.12"
+sha1 = "0.10"
+hmac = "0.12"
+zeroize = { version = "1", features = ["derive"] }
+
+# errors / logging
+thiserror = "1"
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[features]
+# by default tauri uses custom protocol in release
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
